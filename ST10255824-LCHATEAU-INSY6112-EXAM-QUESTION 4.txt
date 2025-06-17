@@ -1,0 +1,32 @@
+Q.4.1
+
+use clients_ST10255824
+
+Q.4.2
+
+db.clients.insertMany([
+  {
+    ClientName: "Debbie",
+    ClientSurname: "Theart",
+    ClientDOB: ISODate("1980-03-17")
+  },
+  {
+    ClientName: "Thomas",
+    ClientSurname: "Duncan",
+    ClientDOB: ISODate("1976-08-12")
+  }
+])
+
+
+
+Q.4.3
+
+db.clients.find()
+
+
+Q.4.4
+
+db.clients.find({
+  ClientDOB: { $gt: ISODate("1979-01-12") }
+})
+

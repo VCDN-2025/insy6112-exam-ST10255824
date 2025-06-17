@@ -1,0 +1,78 @@
+-- Q.3.1
+Create Table Student (
+StudentID Int primary Key ,
+StudentName varchar(100) NOT NULL,
+StudentSurname varchar(100) NOT NULL,
+StudentNumber varchar(100) NOT NULL
+);
+
+-- Q.3.2
+Create Table Lecturer (
+LecturerID Int primary Key ,
+LecturerName varchar(100) NOT NULL,
+LecturerSurname varchar(100) NOT NULL
+);
+
+-- Q.3.3
+CREATE TABLE Tutorial (
+    TutorialID INT PRIMARY KEY,
+    TutorialTime time NOT NULL,
+    TutorialDuration INT NOT NULL,
+    StudentID INT NOT NULL,
+    LecturerID INT NOT NULL,
+    TutorialDate DATE NOT NULL,
+    FOREIGN KEY (StudentID) REFERENCES Student(StudentID),
+    FOREIGN KEY (LecturerID) REFERENCES Lecturer(LecturerID)
+);
+
+-- Q.3.4
+
+INSERT INTO Student (StudentID, StudentName, StudentSurname, StudentNumber)
+VALUES
+(1, 'Debbie', 'Theart', '123456'),
+(2, 'Thomas', 'Duncan', '654321');
+
+
+
+
+INSERT INTO Lecturer (LecturerID, LecturerName, LecturerSurname)
+VALUES
+(1, 'Zintle', 'Nukani'),
+(2, 'Ravi', 'Maharaj');
+
+
+
+
+INSERT INTO Tutorial (TutorialID, TutorialDate, TutorialTime,TutorialDuration, LecturerID, StudentID)
+VALUES
+(1, '2025-01-16', '9:00:00', 180, 2 , 1 ),
+(2, '2025-01-18', '15:00:00', 240, 2, 2),
+(3, '2025-01-20', '10:00:00', 180, 1, 1),
+(4, '2025-01-21', '11:00:00', 180, 2, 1);
+
+
+-- Q.3.5
+SELECT *
+FROM Tutorial
+WHERE TutorialDate BETWEEN '2025-01-16' AND '2025-01-20';
+
+-- Q.3.6
+SELECT 
+    S.StudentName, 
+    S.StudentSurname, 
+    COUNT(*) AS TotalTutorials
+FROM Tutorial T
+JOIN Student S ON T.StudentID = S.StudentID
+GROUP BY S.StudentName, S.StudentSurname
+ORDER BY TotalTutorials DESC;
+
+
+-- Q.3.7
+CREATE VIEW Lecturer2Students AS
+SELECT 
+    S.StudentName, 
+    S.StudentSurname
+FROM Tutorial T
+JOIN Student S ON T.StudentID = S.StudentID
+WHERE T.LecturerID = 2
+ORDER BY S.StudentSurname ASC;
